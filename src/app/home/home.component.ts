@@ -2,11 +2,11 @@
 // --inline-template results in less files for us to manage
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { HousingLocationComponent } from '../housing-location/housing-location.component';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, HousingLocationComponent],
   template: `
     <section>
       <form>
@@ -15,7 +15,7 @@ import { CommonModule } from '@angular/common';
       </form>
     </section>
     <section class="results">
-
+      <app-housing-location></app-housing-location>
     </section>
   `,
   styleUrls: ['./home.component.css']
