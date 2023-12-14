@@ -18,8 +18,12 @@ import { RouterModule } from '@angular/router';
       <p class="listing-location">{{housingLocation.city}}, {{housingLocation.state}}</p>
       <!-- For anchor element, we dont use href we use router link directive
       allows us to extend functionality of anchor element
+
+      We are going to send information to the url
+      enable property binding, make it an array first entry being the string
+      followed by the data.id
     -->
-      <a routerLink="details">Learn More</a>
+      <a [routerLink]="['/details', housingLocation.id]">Learn More</a>
     </section>
   `,
   styleUrls: ['./housing-location.component.css']

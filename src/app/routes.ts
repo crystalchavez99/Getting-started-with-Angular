@@ -13,8 +13,9 @@ const routeConfig: Routes = [
         component: HomeComponent,
         title: 'Home Page'
     },
+    // :id is a placeholder for the parameter
     {
-        path: 'details',
+        path: 'details/:id',
         component: DetailsComponent,
         title: 'Details Page'
     }
