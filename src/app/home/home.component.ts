@@ -12,13 +12,18 @@ import { HousingService } from '../housing.service';
   template: `
     <section>
       <form>
-        <input type="text" placeholder="Filter by city name">
-        <button class="primary" type="button">Search</button>
+        <!--  we will use a template variable
+        # creates template variable
+        we called filter
+        we now have access to html element, which with input we get access to value property
+      -->
+        <input type="text" placeholder="Filter by city name" #filter>
+        <button class="primary" type="button" (click)="filterResults(filter.value)">Search</button>
       </form>
     </section>
     <section class="results">
       <!-- The quotes inside the ngFor is template syntax creates template var to rep entry of iteration now we have to pass data to the componentn-->
-      <app-housing-location *ngFor="let housingLocation of housingLocationList" [housingLocation]="housingLocation"></app-housing-location>
+      <app-housing-location *ngFor="let housingLocation of filteredLocationList" [housingLocation]="housingLocation"></app-housing-location>
     </section>
   `,
   styleUrls: ['./home.component.css']
@@ -31,8 +36,18 @@ export class HomeComponent {
   Allows us to have testable code
   */
   housingService: HousingService = inject(HousingService);
+  filteredLocationList: HousingLocation[] = [];
 
   constructor() {
-    this.housingLocationList = this.housingService.getAllHousingLocations();
+    this.housingService.getAllHousingLocations().then((housingLocationList: HousingLocation[]) =>{
+      this.housingLocationList = housingLocationList;
+      this.filteredLocationList = housingLocationList;
+    })
+  }
+  filterResults(text: string){
+    if(!text) this.filteredLocationList = this.housingLocationList;
+    this.filteredLocationList = this.housingLocationList.filter(
+      housingLocation => housingLocation?.city.toLowerCase().includes(text.toLowerCase())
+    )
   }
 }
